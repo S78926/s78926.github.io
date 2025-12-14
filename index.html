@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Bento Landing Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* * --- 1. Global & Typography ---
+         * Modern, scientific, clean aesthetic.
+         */
+        :root {
+            --color-background: #F8F9FA; /* Soft light grey/white */
+            --color-card-bg: #FFFFFF;    /* Pure white for cards */
+            --color-text: #212529;       /* Dark charcoal for main text */
+            --color-text-secondary: #6C757D; /* Soft grey for secondary text */
+            --color-accent: #0A66C2;     /* Deep Ocean Blue (New Theme) */
+            --color-border: #E9ECEF;     /* Very light grey border */
+
+            --font-family-primary: 'Inter', sans-serif;
+            --border-radius: 12px;
+            --gap: 20px;
+        }
+
+        body {
+            font-family: var(--font-family-primary);
+            background-color: var(--color-background);
+            color: var(--color-text);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* * --- 2. Bento Grid Layout (Desktop View) ---
+         * Uses CSS Grid for a 3-column layout.
+         */
+        .bento-container {
+            width: 100%;
+            max-width: 1200px; /* Max width for large screens */
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+            grid-template-rows: auto auto; /* Two main rows */
+            gap: var(--gap);
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* * --- 3. Card Styling (General) ---
+         */
+        .card {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Subtle lift */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-header {
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .card-content p {
+            margin: 5px 0;
+            line-height: 1.5;
+            color: var(--color-text);
+        }
+
+        .card-content .detail {
+            font-weight: 600;
+            color: var(--color-text);
+            display: block;
+            margin-top: 10px;
+            font-size: 1.5em;
+        }
+        
+        /* Specific elements for visual separation */
+        .separator {
+            width: 100%;
+            height: 1px;
+            background-color: var(--color-border);
+            margin: 15px 0;
+        }
+
+        /* * --- 4. Card Sizing & Placement (Bento Rules) ---
+         */
+
+        /* Card 1 (Profile): Large box (2x2 on Desktop) */
+        .card-profile {
+            grid-column: span 2;
+            grid-row: span 2;
+            min-height: 450px; /* Enforce a minimum height for the large card */
+        }
+        
+        .profile-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--color-text);
+        }
+
+        .profile-subtitle {
+            font-size: 1.2em;
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        .social-links a {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            font-size: 0.95em;
+        }
+
+        .social-links a:hover {
+            color: var(--color-accent);
+        }
+
+        /* Card 6 (Playlist): Wide box at the bottom (3x1) */
+        .card-playlist {
+            grid-column: 1 / span 3;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-playlist .card-content {
+            width: 100%;
+        }
+
+        .card-playlist p {
+            font-style: italic;
+            color: var(--color-text-secondary);
+        }
+
+        /* * --- 5. Responsive Design (Mobile First Stacking) ---
+         * The default mobile view is a simple vertical stack.
+         */
+        @media (max-width: 992px) {
+            body {
+                padding: 20px 15px;
+            }
+            .bento-container {
+                grid-template-columns: 1fr; /* Single column on mobile */
+                gap: 15px;
+            }
+            
+            /* Remove grid spans, all cards are 1-column wide */
+            .card {
+                grid-column: auto !important;
+                grid-row: auto !important;
+                min-height: auto;
+                padding: 20px;
+            }
+            
+            .card-profile .profile-title {
+                font-size: 2em;
+            }
+        }
+        
+        /* * --- 6. Utility Styles ---
+         */
+        .text-secondary {
+            color: var(--color-text-secondary);
+            font-size: 0.9em;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="bento-container">
+
+        <div class="card card-profile">
+            <div class="card-header">
+                <span class="text-secondary">Personal Profile</span>
+            </div>
+            <div class="card-content">
+                <h1 class="profile-title">NUR SHARIENA UMAIRA</h1>
+                <p class="profile-subtitle">'Innovating food safety.'</p>
+                
+                <div class="separator"></div>
+                
+                <p><strong>Program:</strong> <span class="detail">Food Science</span></p>
+                <p><strong>Year:</strong> <span class="detail">Year 1</span></p>
+                
+                <div class="separator"></div>
+                
+                <div class="social-links">
+                    <a href="#">LinkedIn</a>
+                    <a href="#">GitHub</a>
+                    <a href="#">UMT Portal</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-location">
+            <div class="card-header">
+                <span class="text-secondary">Current Location</span>
+            </div>
+            <div class="card-content">
+                <p class="detail">UMT, Kuala Nerus</p>
+                <p class="text-secondary">Terengganu, Malaysia</p>
+                <p class="detail" style="margin-top: 20px;">2:27 PM</p>
+            </div>
+        </div>
+
+        <div class="card card-tech-stack">
+            <div class="card-header">
+                <span class="text-secondary">Focus Area</span>
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Key Subjects / Skills</h3>
+                <p><strong>Core Science:</strong> Food Chemistry, Microbiology</p>
+                <p><strong>Methodology:</strong> Excel, Lab Analysis</p>
+            </div>
+        </div>
+
+        <div class="card card-case-study">
+            <div class="card-header">
+                <span class="text-secondary">Recent Work</span>
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Case Study</h3>
+                <p class="detail">Starch Gelatinization in Local Kuih</p>
+                <p class="text-secondary">Analyzing texture profiles of Kuih Lapis.</p>
+            </div>
+        </div>
+
+        <div class="card card-hobby">
+            <div class="card-header">
+                <span class="text-secondary">Campus Life</span>
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Hobby</h3>
+                <p class="detail">Evening Walks</p>
+                <p class="text-secondary">Pantai UMT</p>
+            </div>
+        </div>
+        
+        <div class="card card-playlist">
+            <div class="card-content">
+                <h3 class="card-title">🎧 Study Soundtrack</h3>
+                <p>Placeholder for an embedded music player widget or Spotify playlist.</p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
