@@ -3,246 +3,287 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Bento Landing Page</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Haziq - Soil Science Student Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    
     <style>
-        /* * --- 1. Global & Typography ---
-         * Theme: Deep Ocean Blue for UMT.
-         */
         :root {
+            /* 4. Clean, Scientific, and Modern Color Palette */
             --color-background: #F8F9FA;
             --color-card-bg: #FFFFFF;
-            --color-text: #212529;
+            --color-text-primary: #212529;
             --color-text-secondary: #6C757D;
-            --color-accent: #0A66C2;     /* Deep Ocean Blue */
+            --color-accent: #004B8D;     /* Deep Ocean Blue (UMT Theme) */
             --color-border: #E9ECEF;
-
-            --font-family-primary: 'Inter', sans-serif;
             --border-radius: 12px;
-            --gap: 20px;
+            --spacing: 16px;
         }
 
         body {
-            font-family: var(--font-family-primary);
+            font-family: 'Inter', sans-serif;
             background-color: var(--color-background);
-            color: var(--color-text);
+            color: var(--color-text-primary);
             margin: 0;
-            padding: 40px 20px;
+            padding: var(--spacing);
+            line-height: 1.6;
             display: flex;
             justify-content: center;
             min-height: 100vh;
-            box-sizing: border-box;
         }
 
-        /* * --- 2. Bento Grid Layout (Desktop View) --- */
-        .bento-container {
+        /* Bento Grid Container */
+        .bento-grid-container {
             width: 100%;
             max-width: 1200px;
             display: grid;
+            gap: var(--spacing);
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: auto auto auto auto; /* 4 rows total */
-            gap: var(--gap);
-            transition: all 0.3s ease-in-out;
+            grid-template-rows: auto;
+            align-content: start;
         }
 
-        /* * --- 3. Card Styling (General & Hover Effect) --- */
+        /* Universal Card Styling */
         .card {
             background-color: var(--color-card-bg);
-            border: 1px solid var(--color-border);
             border-radius: var(--border-radius);
-            padding: 25px;
-            overflow: hidden;
+            padding: var(--spacing) calc(var(--spacing) * 1.5);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--color-border);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; /* Penting untuk overlay dan z-index */
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
         }
 
+        /* Subtle Hover Effect */
         .card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* General content styles */
-        .card-title {
-            font-size: 1.1em;
-            font-weight: 700;
-            color: var(--color-accent);
-            margin-top: 0;
-            margin-bottom: 5px;
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
         }
 
-        .card-content .detail {
-            font-weight: 600;
-            color: var(--color-text);
-            display: block;
-            margin-top: 10px;
-            font-size: 1.5em;
-        }
-
-        .separator {
-            width: 100%;
-            height: 1px;
-            background-color: var(--color-border);
-            margin: 15px 0;
-        }
-
-        /* * --- 4. Card Sizing & Placement (Bento Rules) --- */
-
-        /* Card 1 (Profile): Large box (2x2 on Desktop) - UPDATED FOR BG IMAGE */
+        /* --- Grid Spanning --- */
         .card-profile {
             grid-column: span 2;
             grid-row: span 2;
-            min-height: 450px;
-            
-            /* --- BEGIN: Background Image Update --- */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('bg.jpg'); /* Added overlay gradient for contrast */
+            /* Latar Belakang Gambar Profil */
+            background-image: url('bg.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            color: white; /* Important: Change text color to white for contrast */
-            /* --- END: Background Image Update --- */
+            color: white; /* Default text color in this card */
+            overflow: hidden; /* Penting untuk overlay */
         }
         
-        .card-profile .text-secondary {
-            color: rgba(255, 255, 255, 0.8); /* Lighter grey for secondary text on dark background */
+        .card-tech-stack {
+            grid-column: span 2;
         }
-        .card-profile .profile-title, .card-profile .detail, .card-profile strong {
-            color: white; /* Ensure important details are pure white */
-        }
-        .card-profile .profile-subtitle {
-            color: #A0C4FF; /* A slightly lighter shade of blue for the accent text */
-        }
-        .card-profile .social-links a {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        .card-profile .separator {
-             background-color: rgba(255, 255, 255, 0.3); /* Lighter separator */
-        }
-
-
-        /* Card 6 (Playlist): Wide box at the bottom (3x1) */
+        
+        /* Playlist Card Specific: Remove padding to let the iframe fill the space */
         .card-playlist {
-            grid-column: 1 / span 3; 
-            grid-row: 4 / span 1; /* Fourth row */
-            min-height: 120px;
-            display: flex;
-            align-items: center;
-        }
-
-        /* Positioning for other cards (re-confirmed) */
-        .card-location { grid-column: 3 / span 1; grid-row: 1 / span 1; }
-        .card-tech-stack { grid-column: 3 / span 1; grid-row: 2 / span 1; }
-        .card-case-study { grid-column: 1 / span 1; grid-row: 3 / span 1; }
-        .card-hobby { grid-column: 2 / span 1; grid-row: 3 / span 1; }
-        .card-reflection { grid-column: 3 / span 1; grid-row: 3 / span 1; }
-        
-
-        /* * --- 5. Content Specific Styles --- */
-        .profile-title { font-size: 2.5em; font-weight: 700; margin-bottom: 5px; }
-
-        /* * --- 6. Responsive Design (Mobile First Stacking) --- */
-        @media (max-width: 992px) {
-            body { padding: 20px 15px; }
-            .bento-container {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto;
-                gap: 15px;
-            }
-            .card {
-                grid-column: auto !important;
-                grid-row: auto !important;
-                min-height: auto;
-                padding: 20px;
-            }
+            grid-column: span 3;
+            padding: 0; /* Remove internal padding to contain the full iframe */
+            overflow: hidden; /* Ensure iframe corners match card border radius */
         }
         
-        /* * --- 7. Utility Styles --- */
-        .text-secondary {
-            color: var(--color-text-secondary);
+        .card-playlist iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* --- Content Styling --- */
+
+        /* Profile Card Overlay for Contrast */
+        .card-profile::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4); /* Black overlay 40% opacity */
+            border-radius: var(--border-radius);
+            z-index: 1; 
+        }
+
+        /* Ensure all text content is above the overlay */
+        .card-profile > div {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Text styling for Profile Card (Light colors) */
+        .card-profile h1 {
+            font-size: 2.5em;
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .card-profile .program {
+            color: #ccc; /* Light gray for contrast */
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+        
+        .card-profile .social-links a {
+            color: #fff; /* White for links */
+            text-decoration: none;
+            margin-right: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .card-profile .social-links a:hover {
+            color: #00bfff; /* Lighter blue accent on hover */
+        }
+
+        /* Standard Card Styling (for non-profile cards) */
+        .card-title {
             font-size: 0.9em;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+            font-weight: 500;
         }
 
+        .card-content h2 {
+            font-size: 1.5em;
+            margin: 0 0 10px 0;
+            font-weight: 600;
+        }
+        
+        .card-content p {
+            margin: 0;
+            font-size: 1em;
+            color: var(--color-text-primary);
+        }
+
+        .card-case-study p {
+            color: var(--color-accent);
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .card-location .time {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-top: 5px;
+            color: var(--color-accent);
+        }
+        
+        .subject-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .subject-tag {
+            background-color: var(--color-border);
+            color: var(--color-text-secondary);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        /* --- Mobile Responsiveness (Stacked Vertically) --- */
+
+        @media (max-width: 768px) {
+            .bento-grid-container {
+                grid-template-columns: 1fr;
+            }
+
+            .card-profile,
+            .card-tech-stack,
+            .card-playlist {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+            
+            /* Restore padding for playlist card on mobile since it stacks */
+            .card-playlist {
+                padding: var(--spacing);
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="bento-container">
+
+    <div class="bento-grid-container">
 
         <div class="card card-profile">
-            <div class="card-header">
-                <span class="text-secondary">Personal Profile</span>
+            <div>
+                <h1>Haziq</h1>
+                <p class="program">Soil Science, Year 1</p>
+                <p>Welcome to my student dashboard. Currently focusing on analytical techniques and microbial safety in the food industry. </p>
+                <p><strong>Tagline:</strong> 'plants for all.'</p>
             </div>
-            <div class="card-content">
-                <h1 class="profile-title">NUR SHARIENA UMAIRA</h1>
-                <p class="profile-subtitle">'Innovating food safety.'</p>
-                
-                <div class="separator"></div>
-                
-                <p><strong>Program:</strong> <span class="detail">Food Science</span></p>
-                <p><strong>Year:</strong> <span class="detail">Year 1</span></p>
-                
-                <div class="separator"></div>
-                
-                <div class="social-links">
-                    <a href="#" target="_blank">LinkedIn</a>
-                    <a href="#" target="_blank">GitHub</a>
-                    <a href="#" target="_blank">UMT Portal</a>
-                </div>
+            <div class="social-links">
+                <a href="#" target="_blank">LinkedIn</a>
+                <a href="#" target="_blank">GitHub</a>
+                <a href="#" target="_blank">UMT Portal</a>
             </div>
         </div>
 
         <div class="card card-location">
-            <div class="card-header"><span class="text-secondary">Current Location</span></div>
-            <div class="card-content">
-                <p class="detail">UMT, Kuala Nerus</p>
-                <p class="text-secondary">Terengganu, Malaysia</p>
-                <p class="detail" style="margin-top: 20px;">3:00 PM</p>
+            <div>
+                <div class="card-title">Current Location</div>
+                <div class="card-content">
+                    <h2>UMT, Kuala Nerus</h2>
+                    <div class="time">12:39 PM</div> 
+                </div>
             </div>
         </div>
         
-        <div class="card card-tech-stack">
-            <div class="card-header"><span class="text-secondary">Key Subjects / Skills</span></div>
-            <div class="card-content">
-                <h3 class="card-title">Focus Area</h3>
-                <p><strong>Core Science:</strong> Food Chemistry, Microbiology</p>
-                <p><strong>Methodology:</strong> Excel, Lab Analysis</p>
-            </div>
-        </div>
-        
-        <div class="card card-case-study">
-            <div class="card-header"><span class="text-secondary">Recent Work</span></div>
-            <div class="card-content">
-                <h3 class="card-title">Case Study</h3>
-                <p class="detail">Starch Gelatinization in Local Kuih</p>
-                <p class="text-secondary">Analyzing texture profiles of Kuih Lapis.</p>
-            </div>
-        </div>
-
         <div class="card card-hobby">
-            <div class="card-header"><span class="text-secondary">Campus Life</span></div>
-            <div class="card-content">
-                <h3 class="card-title">Hobby</h3>
-                <p class="detail">Evening Walks</p>
-                <p class="text-secondary">Pantai UMT</p>
+            <div>
+                <div class="card-title">Hobby</div>
+                <div class="card-content">
+                    <h2>Coastal Relaxation</h2>
+                    <p>Evening walks at Pantai UMT.</p>
+                </div>
             </div>
         </div>
         
         <div class="card card-reflection">
-            <div class="card-header"><span class="text-secondary">Perspective</span></div>
+            <div class="card-title">Reflection / Perspective</div>
             <div class="card-content">
-                <h3 class="card-title">Why Food Tech Matters in Malaysia</h3>
-                <p class="reflection-content">Sustainable food security is crucial for our future. By optimizing local processing methods, we can reduce waste and improve nutrition.</p>
-            </div>
-        </div>
-        
-        <div class="card card-playlist">
-            <div class="card-content">
-                <h3 class="card-title">🎧 Study Soundtrack</h3>
-                <p>Placeholder for an embedded music player widget or Spotify playlist.<<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/1k0JAiH11gHL9dc5dfQjQr?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>>
+                <h2>Why Food Tech Matters in Malaysia</h2>
+                <p>Sustainable food security is crucial for our future. By optimizing local processing methods, we can reduce waste and improve nutrition.</p>
             </div>
         </div>
 
+        <div class="card card-case-study">
+            <div class="card-title">Recent Lab Work</div>
+            <div class="card-content">
+                <h2>Soil Horizon</h2>
+                <p>Analyzing texture profiles of Soil — View Report</p>
+            </div>
+        </div>
+
+        <div class="card card-tech-stack">
+            <div class="card-title">Core Subjects / Stack</div>
+            <div class="card-content">
+                <h2>Current Focus Areas</h2>
+                <div class="subject-list">
+                    <span class="subject-tag">Basic Soil</span>
+                    <span class="subject-tag">Soil Science</span>
+                    <span class="subject-tag">Excel</span>
+                    <span class="subject-tag">Lab Analysis</span>
+                    <span class="subject-tag">Research Methods</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-playlist">
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/13KXgSl4vs7h8y2G7V6GrB?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
     </div>
+
 </body>
 </html>
